@@ -23,7 +23,7 @@ class ClickRecorder:
 
     def on_scroll(self, x, y, dx, dy):
         if self.recording_started:
-            self.recorded_actions.append(("scroll", dx, dy))
+            self.recorded_actions.append(("scroll", x, y, dx, dy))
             self.save_data()
 
     def on_key(self, key):
