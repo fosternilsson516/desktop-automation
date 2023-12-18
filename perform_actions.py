@@ -1,34 +1,39 @@
 import json
 import time
-from pynput.mouse import Controller as MouseController
-from pynput.keyboard import Controller as KeyboardController
+import pyautogui
 
 def perform_actions(actions):
-    mouse = MouseController()
-    keyboard = KeyboardController()
 
     for action in actions:
         action_type, *args = action
 
         if action_type == "click":
             x, y = args
-            mouse.position = (x, y)
-            mouse.click()
+            pyautogui.click(x, y)
 
         elif action_type == "scroll":
             dx, dy = args
-            mouse.scroll(dx, dy)
+            pyautogui.scroll(dx)
 
         elif action_type == "keys":
             keys = args[0]
-            keyboard.type(keys)
+            pyautogui.write(keys)
 
         # Add additional conditions for other action types if needed
 
         time.sleep(1)  # Adjust the wait time between actions as needed
 
+def re_run_actions_with_data_list(recorded_actions, data_list):
+    for click_location in recorded_actions:
+        if click_location[0] == "click":
+            x, y = click_location[1:]
+            print(f"Clicking at coordinates: ({x}, {y})")
+            perform_actions([(click_location)] + data_list)
+
 if __name__ == "__main__":
     with open("recorded_actions.json", "r") as file:
         recorded_actions = json.load(file)
 
-    perform_actions(recorded_actions)
+    data_list = ["hello"]  # Replace with your list of data items
+
+    re_run_actions_with_data_list(recorded_actions, data_list)
