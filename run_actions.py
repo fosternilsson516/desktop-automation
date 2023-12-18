@@ -13,6 +13,6 @@ if __name__ == "__main__":
     with open("recorded_actions.json", "r") as file:
         recorded_actions = json.load(file)
 
-    data_list = ["0300389076E01"]  # Replace with your list of data items
+    data_list = ["item1", "item2", "item3"]  # Replace with your list of data items
 
     re_run_actions_with_data_list(recorded_actions, data_list)
